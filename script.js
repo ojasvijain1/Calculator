@@ -28,6 +28,14 @@ document.querySelectorAll(".number").forEach(button => {
     })
 })
 
+document.querySelector(".cancel").addEventListener("click", async () => {
+    document.querySelector(".numbers").innerHTML = "";
+    document.querySelector(".solution").innerHTML = "";
+    num = "";
+    isOperationUsed = false;
+    await logIsOperationUsed();
+})
+
 async function logIsOperationUsed() {
     console.log(isOperationUsed);
 }
