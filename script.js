@@ -1,5 +1,6 @@
 console.log("Let's write some JavaScript");
 let isOperationUsed = false;
+let num = "";
 
 document.querySelectorAll(".operation").forEach(button => {
     button.addEventListener("click", async e => {
@@ -14,11 +15,18 @@ document.querySelectorAll(".operation").forEach(button => {
         if (document.querySelector(".numbers").innerHTML.trim() == "") {
             alert("Cannot use any operation right now");
         } else {
-            document.querySelector(".numbers").innerHTML = `<img src=${srcAttributeValue}>`;
+            document.querySelector(".numbers").innerHTML = document.querySelector(".numbers").innerHTML + `<img src=${srcAttributeValue}>`;
         }
         await logIsOperationUsed();
     });
 });
+
+document.querySelectorAll(".number").forEach(button => {
+    button.addEventListener("click", e => {
+        num += e.currentTarget.innerHTML;
+        document.querySelector(".numbers").innerHTML = num;
+    })
+})
 
 async function logIsOperationUsed() {
     console.log(isOperationUsed);
