@@ -13,33 +13,33 @@ operations = {
 
 function calculation(HTML) {
     let num1, num2, sol;
-    
+
     let srcMatch = HTML.match(/src="([^"]+)"/);
     let srcAttributeValue;
     if (srcMatch) {
         srcAttributeValue = srcMatch[1];
     }
     let mid = srcAttributeValue.split("/img/")[1];
-    
+
     num1 = parseInt(HTML.split(`<img src="${srcAttributeValue}">`)[0])
     num2 = parseInt(HTML.split(`<img src="${srcAttributeValue}">`)[1])
     operator = operations[mid.split(".")[0]];
-    switch(operator) {
+    switch (operator) {
         case '+': sol = num1 + num2;
-                  document.querySelector(".solution").innerHTML = sol;
-                  return true;
+            document.querySelector(".solution").innerHTML = sol;
+            return true;
         case '-': sol = num1 - num2;
-                  document.querySelector(".solution").innerHTML = sol;
-                  return true;
+            document.querySelector(".solution").innerHTML = sol;
+            return true;
         case '/': sol = num1 / num2;
-                  document.querySelector(".solution").innerHTML = sol;
-                  return true;
+            document.querySelector(".solution").innerHTML = sol;
+            return true;
         case '*': sol = num1 * num2;
-                  document.querySelector(".solution").innerHTML = sol;
-                  return true;
+            document.querySelector(".solution").innerHTML = sol;
+            return true;
         case '%': sol = (num1 * num2) / 100;
-                  document.querySelector(".solution").innerHTML = sol;
-                  return true;
+            document.querySelector(".solution").innerHTML = sol;
+            return true;
     }
 }
 
@@ -59,11 +59,17 @@ document.querySelectorAll(".operation").forEach(button => {
         } else {
             if (srcAttributeValue == "/img/equal.svg") {
                 calculation(document.querySelector(".numbers").innerHTML);
-            }
-            else {
-                document.querySelector(".numbers").innerHTML = document.querySelector(".numbers").innerHTML + `<img src=${srcAttributeValue}>`;
-                num = "";
-                storedHTML = document.querySelector(".numbers").innerHTML;
+            } else {
+                if (document.querySelector(".numbers").innerHTML.includes(`.svg`)) {
+                    const currentHTML = document.querySelector(".numbers").innerHTML;
+                    const newHTML = currentHTML.replace(/<img src="([^"]+)">/, `<img src=${srcAttributeValue}>`);
+                    document.querySelector(".numbers").innerHTML = newHTML;
+                    storedHTML = newHTML;
+                } else {
+                    document.querySelector(".numbers").innerHTML = document.querySelector(".numbers").innerHTML + `<img src=${srcAttributeValue}>`;
+                    num = "";
+                    storedHTML = document.querySelector(".numbers").innerHTML;
+                }
             }
         }
         await logIsOperationUsed();
