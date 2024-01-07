@@ -2,6 +2,7 @@ console.log("Let's write some JavaScript");
 let isOperationUsed = false;
 let num = "";
 let storedHTML = "";
+let cal = false;
 
 operations = {
     "plus": '+',
@@ -11,7 +12,7 @@ operations = {
     "percent": "%",
 }
 
-function calculation(HTML) {
+async function calculation(HTML) {
     let num1, num2, sol;
 
     let srcMatch = HTML.match(/src="([^"]+)"/);
@@ -58,7 +59,7 @@ document.querySelectorAll(".operation").forEach(button => {
             isOperationUsed = false;
         } else {
             if (srcAttributeValue == "/img/equal.svg") {
-                calculation(document.querySelector(".numbers").innerHTML);
+                cal = await calculation(document.querySelector(".numbers").innerHTML);
             } else {
                 if (document.querySelector(".numbers").innerHTML.includes(`.svg`)) {
                     const currentHTML = document.querySelector(".numbers").innerHTML;
@@ -78,13 +79,24 @@ document.querySelectorAll(".operation").forEach(button => {
 
 document.querySelectorAll(".number").forEach(button => {
     button.addEventListener("click", async e => {
-        num += e.currentTarget.innerHTML;
-        let a = await logIsOperationUsed();
-        if (a == true) {
-            document.querySelector(".numbers").innerHTML = storedHTML + num;
+        if (cal) {
+            document.querySelector(".numbers").innerHTML = "";
+            document.querySelector(".solution").innerHTML = "";
+            num = "";
+            storedHTML = "";
+            isOperationUsed = false;
+            cal = false;
+            await logIsOperationUsed();
         }
         else {
-            document.querySelector(".numbers").innerHTML = num;
+            num += e.currentTarget.innerHTML;
+            let a = await logIsOperationUsed();
+            if (a == true) {
+                document.querySelector(".numbers").innerHTML = storedHTML + num;
+            }
+            else {
+                document.querySelector(".numbers").innerHTML = num;
+            }
         }
     })
 })
@@ -95,6 +107,7 @@ document.querySelector(".cancel").addEventListener("click", async () => {
     num = "";
     storedHTML = "";
     isOperationUsed = false;
+    cal = false;
     await logIsOperationUsed();
 })
 
