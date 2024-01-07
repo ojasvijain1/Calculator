@@ -37,8 +37,21 @@
 }
 
 .numbers {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
     color: white;
     font-size: 24px;
+    margin-right: 10px;
+}
+
+.solution {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    margin-right: 10px;
 }
 
 .buttonsGrid {
