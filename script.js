@@ -19,10 +19,11 @@ function calculation(HTML) {
     if (srcMatch) {
         srcAttributeValue = srcMatch[1];
     }
+    let mid = srcAttributeValue.split("/img/")[1];
     
     num1 = parseInt(HTML.split(`<img src="${srcAttributeValue}">`)[0])
     num2 = parseInt(HTML.split(`<img src="${srcAttributeValue}">`)[1])
-    operator = operations[srcAttributeValue.split(".")[0]];
+    operator = operations[mid.split(".")[0]];
     switch(operator) {
         case '+': sol = num1 + num2;
                   document.querySelector(".solution").innerHTML = sol;
@@ -56,7 +57,7 @@ document.querySelectorAll(".operation").forEach(button => {
             alert("Cannot use any operation right now");
             isOperationUsed = false;
         } else {
-            if (srcAttributeValue == "equal.svg") {
+            if (srcAttributeValue == "/img/equal.svg") {
                 calculation(document.querySelector(".numbers").innerHTML);
             }
             else {
