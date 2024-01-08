@@ -85,6 +85,11 @@
     user-select: none;
 }
 
+.erase {
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
 .text {
     font-size: 24px;
     color: white;
@@ -131,7 +136,7 @@
         gap: calc(30px - 20px);
     }
 
-    .buttonsCircle {
+    .buttonsCircle, .erase {
         -webkit-tap-highlight-color: transparent;
         user-select: none;
     }
@@ -143,7 +148,7 @@
         height: fit-content;
     }
 
-    .buttonsCircle {
+    .buttonsCircle, .erase {
         -webkit-tap-highlight-color: transparent;
         user-select: none;
     }
@@ -155,7 +160,7 @@
         height: fit-content;
     }
 
-    .buttonsCircle {
+    .buttonsCircle, .erase {
         -webkit-tap-highlight-color: transparent;
         user-select: none;
     }
@@ -167,7 +172,7 @@
         height: fit-content;
     }
 
-    .buttonsCircle {
+    .buttonsCircle, .erase {
         -webkit-tap-highlight-color: transparent;
         user-select: none;
     }
@@ -179,7 +184,7 @@
         height: fit-content;
     }
 
-    .buttonsCircle {
+    .buttonsCircle, .erase {
         -webkit-tap-highlight-color: transparent;
         user-select: none;
     }
@@ -191,7 +196,7 @@
         height: fit-content;
     }
 
-    .buttonsCircle {
+    .buttonsCircle, .erase {
         -webkit-tap-highlight-color: transparent;
         user-select: none;
     }
@@ -203,7 +208,7 @@
         height: fit-content;
     }
 
-    .buttonsCircle {
+    .buttonsCircle, .erase {
         -webkit-tap-highlight-color: transparent;
         user-select: none;
     }
@@ -215,7 +220,7 @@
         height: fit-content;
     }
 
-    .buttonsCircle {
+    .buttonsCircle, .erase {
         -webkit-tap-highlight-color: transparent;
         user-select: none;
     }
@@ -226,7 +231,7 @@
         width: calc(100vw - 300px);
     }
 
-    .buttonsCircle {
+    .buttonsCircle, .erase {
         -webkit-tap-highlight-color: transparent;
         user-select: none;
     }
@@ -247,7 +252,7 @@
         gap: 0px;
     }
 
-    .buttonsCircle {
+    .buttonsCircle, .erase {
         -webkit-tap-highlight-color: transparent;
         user-select: none;
     }

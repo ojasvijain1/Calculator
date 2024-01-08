@@ -101,6 +101,38 @@ document.querySelectorAll(".number").forEach(button => {
     })
 })
 
+document.querySelector(".erase").addEventListener("click", async () => {
+    let numbersElement = document.querySelector(".numbers");
+    let numbersHTML = numbersElement.innerHTML.trim();
+
+    if (numbersHTML == "") {
+        alert("You can not erase anything right now, you mad person :) :{");
+    } else {
+        
+        if (!document.querySelector(".numbers").innerHTML.includes("img")) {
+            isOperationUsed = false;
+            await logIsOperationUsed();
+        }
+
+        // If after erasing one character, the HTML becomes empty
+        if (numbersHTML.slice(0, -1).trim() == "") {
+            numbersElement.innerHTML = "";
+            document.querySelector(".solution").innerHTML = "";
+            num = "";
+            storedHTML = "";
+            isOperationUsed = false;
+            cal = false;
+            await logIsOperationUsed();
+        } 
+        
+        else {
+            document.querySelector(".numbers").innerHTML = document.querySelector(".numbers").innerHTML.slice(0, -1);
+            num = num.slice(0, -1);
+        }
+    }
+});
+
+
 document.querySelector(".cancel").addEventListener("click", async () => {
     document.querySelector(".numbers").innerHTML = "";
     document.querySelector(".solution").innerHTML = "";
