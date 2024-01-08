@@ -31,12 +31,16 @@
 }
 
 .screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
     width: 14vw;
     height: 10vh;
     background-color: rgb(0, 0, 0);
 }
 
-.numbers {
+.numbers, .solution {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -45,13 +49,13 @@
     margin-right: 10px;
 }
 
-.solution {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    color: white;
-    font-size: 24px;
+.erase {
     margin-right: 10px;
+    margin-top: auto; /* Align .erase to the bottom */
+}
+
+.erase img {
+    cursor: pointer;
 }
 
 .buttonsGrid {
