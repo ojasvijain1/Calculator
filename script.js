@@ -110,8 +110,11 @@ document.querySelector(".erase").addEventListener("click", async () => {
     } else {
         
         if (!document.querySelector(".numbers").innerHTML.includes("img")) {
+            storedHTML = storedHTML.replace(/<img src="([^"]+)">/, "e");
+            storedHTML = storedHTML.slice(0, -1);
+            num = storedHTML;
             isOperationUsed = false;
-            await logIsOperationUsed();
+            cal = false;
         }
 
         // If after erasing one character, the HTML becomes empty
