@@ -135,6 +135,11 @@ document.querySelector(".erase").addEventListener("click", async () => {
     }
 });
 
+document.querySelector(".decimal").addEventListener("click", () => {
+    console.log("Decimal pressed");
+    // Use if .numbers.innerHtml.endsWith(>) then make the new number as 0.
+})
+
 
 document.querySelector(".cancel").addEventListener("click", async () => {
     document.querySelector(".numbers").innerHTML = "";
