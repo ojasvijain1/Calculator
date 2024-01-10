@@ -3,6 +3,7 @@ let isOperationUsed = false;
 let num = "";
 let storedHTML = "";
 let cal = false;
+let decimal = 1;
 
 operations = {
     "plus": '+',
@@ -13,7 +14,7 @@ operations = {
 }
 
 async function calculation(HTML) {
-    let num1, num2, sol;
+    let sol;
 
     let srcMatch = HTML.match(/src="([^"]+)"/);
     let srcAttributeValue;
@@ -22,27 +23,38 @@ async function calculation(HTML) {
     }
     let mid = srcAttributeValue.split("/img/")[1];
 
-    num1 = parseInt(HTML.split(`<img src="${srcAttributeValue}">`)[0])
-    num2 = parseInt(HTML.split(`<img src="${srcAttributeValue}">`)[1])
+    let str = HTML;
     operator = operations[mid.split(".")[0]];
+
     switch (operator) {
-        case '+': sol = num1 + num2;
+        case '+':
+            str = str.replace(/<img src="([^"]+)">/, "+");
+            sol = eval(str);
             document.querySelector(".solution").innerHTML = sol;
             return true;
-        case '-': sol = num1 - num2;
+        case '-':
+            str = str.replace(/<img src="([^"]+)">/, "-");
+            sol = eval(str);
             document.querySelector(".solution").innerHTML = sol;
             return true;
-        case '/': sol = num1 / num2;
+        case '/':
+            str = str.replace(/<img src="([^"]+)">/, "/");
+            sol = eval(str);
             document.querySelector(".solution").innerHTML = sol;
             return true;
-        case '*': sol = num1 * num2;
+        case '*':
+            str = str.replace(/<img src="([^"]+)">/, "*");
+            sol = eval(str);
             document.querySelector(".solution").innerHTML = sol;
             return true;
-        case '%': sol = (num1 * num2) / 100;
+        case '%':
+            str = str.replace(/<img src="([^"]+)">/, "%");
+            sol = eval(str);
             document.querySelector(".solution").innerHTML = sol;
             return true;
     }
 }
+
 
 document.querySelectorAll(".operation").forEach(button => {
     button.addEventListener("click", async e => {
@@ -136,7 +148,16 @@ document.querySelector(".erase").addEventListener("click", async () => {
 });
 
 document.querySelector(".decimal").addEventListener("click", () => {
-    console.log("Decimal pressed");
+    if (!document.querySelector(".numbers").innerHTML.includes("img")) {
+        if (decimal > 1) {
+            alert("You cannot use decimal more than one in a single number. At leat in my calculator :)");
+        }
+        else {
+            num += document.querySelector(".decimal").innerHTML;
+            document.querySelector(".numbers").innerHTML = num;
+            ++decimal;
+        }
+    }
     // Use if .numbers.innerHtml.endsWith(>) then make the new number as 0.
 })
 
@@ -148,6 +169,7 @@ document.querySelector(".cancel").addEventListener("click", async () => {
     storedHTML = "";
     isOperationUsed = false;
     cal = false;
+    decimal = 1;
     await logIsOperationUsed();
 })
 
