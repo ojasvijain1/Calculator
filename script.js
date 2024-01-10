@@ -137,6 +137,7 @@ document.querySelector(".erase").addEventListener("click", async () => {
             storedHTML = "";
             isOperationUsed = false;
             cal = false;
+            decimal = 1;
             await logIsOperationUsed();
         } 
         
