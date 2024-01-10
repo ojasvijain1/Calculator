@@ -159,7 +159,29 @@ document.querySelector(".decimal").addEventListener("click", () => {
             ++decimal;
         }
     }
+
     // Use if .numbers.innerHtml.endsWith(>) then make the new number as 0.
+    else if (document.querySelector(".numbers").innerHTML.endsWith(">")) {
+        if (decimal > 2) {
+            alert("You cannot use decimal more than one in a single number. At leat in my calculator :)");
+        }
+        else {
+            num += "0.";
+            document.querySelector(".numbers").innerHTML = storedHTML + num;
+            ++decimal;
+        }
+    }
+
+    else if (document.querySelector(".numbers").innerHTML.includes("img") && !document.querySelector(".numbers").innerHTML.endsWith(">")) {
+        if (decimal > 2) {
+            alert("You cannot use decimal more than one in a single number. At leat in my calculator :)");
+        }
+        else {
+            num += ".";
+            document.querySelector(".numbers").innerHTML = storedHTML + num;
+            ++decimal;
+        }
+    }
 })
 
 
