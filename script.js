@@ -120,13 +120,19 @@ document.querySelector(".erase").addEventListener("click", async () => {
     if (numbersHTML == "") {
         alert("You can not erase anything right now, you mad person :) :{");
     } else {
-        
-        if (!document.querySelector(".numbers").innerHTML.includes("img")) {
+        let erasedChar = numbersHTML.charAt(numbersHTML.length - 1);
+        console.log(erasedChar);
+        if (erasedChar == ">") {
             storedHTML = storedHTML.replace(/<img src="([^"]+)">/, "e");
-            storedHTML = storedHTML.slice(0, -1);
             num = storedHTML;
             isOperationUsed = false;
             cal = false;
+        }
+
+        // Check if erased character was a decimal point
+        if (erasedChar == "." && !numbersHTML.includes("img")) {
+            num = numbersHTML;
+            decimal = 1;  // Reset decimal counter to 1
         }
 
         // If after erasing one character, the HTML becomes empty
