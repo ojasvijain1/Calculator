@@ -103,7 +103,8 @@
 .bracket {
     color: #3fd981;
     letter-spacing: 3px;
-    padding-left: 2px;
+    padding-left: 4px;
+    margin-bottom: 4px;
 }
 
 .red {

@@ -4,6 +4,7 @@ let num = "";
 let storedHTML = "";
 let cal = false;
 let decimal = 1;
+let bracketUsed = 0;
 
 operations = {
     "plus": '+',
@@ -187,6 +188,21 @@ document.querySelector(".decimal").addEventListener("click", () => {
             document.querySelector(".numbers").innerHTML = storedHTML + num;
             ++decimal;
         }
+    }
+})
+
+document.querySelector(".bracket").addEventListener("click", async () => {
+    console.log("Hello bracket clicked");
+    if (document.querySelector(".numbers").innerHTML.trim() == "") {
+        document.querySelector(".numbers").innerHTML = document.querySelector(".numbers").innerHTML + "(";
+        num += "(";
+        bracketUsed++;
+    }
+
+    if (!document.querySelector(".numbers").innerHTML.includes("img") && document.querySelector(".numbers").innerHTML.length >= 2) {
+        document.querySelector(".numbers").innerHTML = document.querySelector(".numbers").innerHTML + ")";
+        num += ")";
+        bracketUsed++;
     }
 })
 
