@@ -199,7 +199,7 @@ document.querySelector(".bracket").addEventListener("click", async () => {
         bracketUsed++;
     }
 
-    if (!document.querySelector(".numbers").innerHTML.includes("img") && document.querySelector(".numbers").innerHTML.length >= 2) {
+    else if (!document.querySelector(".numbers").innerHTML.includes("img") && document.querySelector(".numbers").innerHTML.length >= 2 && bracketUsed == 1) {
         document.querySelector(".numbers").innerHTML = document.querySelector(".numbers").innerHTML + ")";
         num += ")";
         bracketUsed++;
