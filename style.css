@@ -8,7 +8,7 @@
 
 .container {
     /* background-color: rgb(26, 25, 25); */
-    background: linear-gradient(45deg, rgba(103, 0, 103, 0.688), rgb(48, 48, 240));
+    background: linear-gradient(45deg, rgba(103, 0, 103, 0.688), rgb(0, 0, 0),  rgb(48, 48, 240));
     width: 100vw;
     height: 100vh;
     display: flex;
