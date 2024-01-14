@@ -51,16 +51,18 @@ document.querySelectorAll(".operation").forEach(button => {
             if (srcAttributeValue == "/img/equal.svg") {
                 cal = await calculation(document.querySelector(".numbers").innerHTML);
             } else {
-                // if (document.querySelector(".numbers").innerHTML.includes(`.svg`)) {
-                //     const currentHTML = document.querySelector(".numbers").innerHTML;
-                //     const newHTML = currentHTML.replace(/<img src="([^"]+)">/, `<img src=${srcAttributeValue}>`);
-                //     document.querySelector(".numbers").innerHTML = newHTML;
-                //     storedHTML = newHTML;
-                // } else {
-                document.querySelector(".numbers").innerHTML = document.querySelector(".numbers").innerHTML + `<img src=${srcAttributeValue}>`;
-                num = "";
-                storedHTML = document.querySelector(".numbers").innerHTML;
-                // }
+                if (document.querySelector(".numbers").innerHTML.endsWith(">")) {
+                    let lastImgIndex = storedHTML.lastIndexOf('<img src="');
+                    if (lastImgIndex !== -1) {
+                        let lastImgTag = storedHTML.substring(lastImgIndex, storedHTML.indexOf(">", lastImgIndex) + 1);
+                        storedHTML = storedHTML.replace(lastImgTag, `<img src=${srcAttributeValue}>`);
+                        document.querySelector(".numbers").innerHTML = storedHTML;
+                    }
+                } else {
+                    document.querySelector(".numbers").innerHTML = document.querySelector(".numbers").innerHTML + `<img src=${srcAttributeValue}>`;
+                    num = "";
+                    storedHTML = document.querySelector(".numbers").innerHTML;
+                }
             }
         }
         await logIsOperationUsed();
