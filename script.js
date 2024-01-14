@@ -5,6 +5,7 @@ let storedHTML = "";
 let cal = false;
 let decimal = 1;
 let bracketUsed = 0;
+let bracketOperationUsed = 0;
 
 operations = {
     "plus": '+',
@@ -186,6 +187,27 @@ document.querySelector(".bracket").addEventListener("click", async () => {
         document.querySelector(".numbers").innerHTML = document.querySelector(".numbers").innerHTML + ")";
         num += ")";
         bracketUsed++;
+    }
+
+    if (document.querySelector(".numbers").innerHTML.length > 0 && !document.querySelector(".numbers").innerHTML.endsWith(">")) {
+        ++bracketOperationUsed;
+        console.log("Hello");
+        if (bracketOperationUsed == 1) {
+            document.querySelector(".numbers").innerHTML = document.querySelector(".numbers").innerHTML + `<img src="/img/multiply.svg">(`;
+            storedHTML = document.querySelector(".numbers").innerHTML;
+            num = "";
+            isOperationUsed = true;
+            await logIsOperationUsed();
+        }
+        else if (bracketOperationUsed == 2) {
+            bracketOperationUsed = 0;
+            storedHTML = ")";
+            document.querySelector(".numbers").innerHTML += storedHTML;
+            storedHTML = document.querySelector(".numbers").innerHTML;
+            num = "";
+            isOperationUsed = true;
+            await logIsOperationUsed();
+        }
     }
 })
 
