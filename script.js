@@ -6,6 +6,7 @@ let cal = false;
 let decimal = 1;
 let bracketUsed = 0;
 let bracketOperationUsed = 0;
+let bracketUsedAtFirst = 0;
 
 operations = {
     "plus": '+',
@@ -229,6 +230,61 @@ document.querySelector(".bracket").addEventListener("click", async () => {
             num = "";
             isOperationUsed = true;
             await logIsOperationUsed();
+        }
+    }
+})
+
+document.querySelector(".plus_minus").addEventListener("click", async () => {
+    // If the screen is empty.
+    if (document.querySelector(".numbers").innerHTML.trim() == "") {
+        document.querySelector(".numbers").innerHTML = document.querySelector(".numbers").innerHTML + `(<img src="/img/subtraction.svg">`;
+        storedHTML = document.querySelector(".numbers").innerHTML;
+        num = "";
+        isOperationUsed = true;
+        bracketUsedAtFirst = 1;
+        await logIsOperationUsed();
+    }
+    else if (document.querySelector(".numbers").innerHTML.startsWith(`(<img src="/img/subtraction.svg">`) && bracketUsedAtFirst == 1) {
+        document.querySelector(".numbers").innerHTML += ")";
+        storedHTML = document.querySelector(".numbers").innerHTML;
+        num = "";
+        bracketUsedAtFirst = 0;
+    }
+
+    // if the screen is not empty.
+    else {
+        let openBracket = 0, closedBracket = 0;
+        console.log("In else");
+        if (!document.querySelector(".numbers").innerHTML.startsWith(`(<img src="/img/subtraction.svg">`) && !document.querySelector(".numbers").innerHTML.includes(">")) {
+            let tempNum = "";
+            tempNum = `(<img src="/img/subtraction.svg">` + num;
+            storedHTML = tempNum;
+            document.querySelector(".numbers").innerHTML = storedHTML;
+            tempNum = "";
+            isOperationUsed = true;
+            await logIsOperationUsed();
+        }
+
+        else if (document.querySelector(".numbers").innerHTML.includes(">")) {
+            storedHTML = `(<img src="/img/subtraction.svg">`;
+            document.querySelector(".numbers").innerHTML += storedHTML;
+            storedHTML = document.querySelector(".numbers").innerHTML;
+            num = "";
+            isOperationUsed = true;
+            await logIsOperationUsed();
+
+            let HTML = document.querySelector(".numbers").innerHTML;
+            console.log(HTML)
+            for (let i = 0; i < HTML.length; i++) {
+                if (HTML[i] == "(") {
+                    openBracket++;
+                }
+                else if (HTML[i] == ")") {
+                    closedBracket++;
+                }
+            }
+
+            console.log(openBracket, closedBracket);
         }
     }
 })
