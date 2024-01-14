@@ -79,6 +79,7 @@ document.querySelectorAll(".number").forEach(button => {
             storedHTML = "";
             isOperationUsed = false;
             cal = false;
+            bracketOperationUsed = 0;
             await logIsOperationUsed();
         }
         else {
@@ -129,6 +130,7 @@ document.querySelector(".erase").addEventListener("click", async () => {
             isOperationUsed = false;
             cal = false;
             decimal = 1;
+            bracketOperationUsed = 0;
             await logIsOperationUsed();
         }
 
@@ -209,6 +211,26 @@ document.querySelector(".bracket").addEventListener("click", async () => {
             await logIsOperationUsed();
         }
     }
+
+    if (document.querySelector(".numbers").innerHTML.endsWith(">")) {
+        ++bracketOperationUsed;
+        if (bracketOperationUsed == 1) {
+            document.querySelector(".numbers").innerHTML = document.querySelector(".numbers").innerHTML + `(`;
+            storedHTML = document.querySelector(".numbers").innerHTML;
+            num = "";
+            isOperationUsed = true;
+            await logIsOperationUsed();
+        }
+        else if (bracketOperationUsed == 2) {
+            bracketOperationUsed = 0;
+            storedHTML = ")";
+            document.querySelector(".numbers").innerHTML += storedHTML;
+            storedHTML = document.querySelector(".numbers").innerHTML;
+            num = "";
+            isOperationUsed = true;
+            await logIsOperationUsed();
+        }
+    }
 })
 
 
@@ -220,6 +242,7 @@ document.querySelector(".cancel").addEventListener("click", async () => {
     isOperationUsed = false;
     cal = false;
     decimal = 1;
+    bracketOperationUsed = 0;
     await logIsOperationUsed();
 })
 
