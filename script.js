@@ -17,45 +17,22 @@ operations = {
 async function calculation(HTML) {
     let sol;
 
-    let srcMatch = HTML.match(/src="([^"]+)"/);
-    let srcAttributeValue;
-    if (srcMatch) {
-        srcAttributeValue = srcMatch[1];
-    }
-    let mid = srcAttributeValue.split("/img/")[1];
+    // Iterate over the keys in the operations object
+    Object.keys(operations).forEach(operatorKey => {
+        // Get the operator symbol from the operations object
+        let operatorSymbol = operations[operatorKey];
 
-    let str = HTML;
-    operator = operations[mid.split(".")[0]];
+        // Create a regular expression to match the specific img tag for the operator
+        let imgRegex = new RegExp(`<img src="/img/${operatorKey}.svg">`, "g");
 
-    switch (operator) {
-        case '+':
-            str = str.replace(/<img src="([^"]+)">/, "+");
-            sol = eval(str);
-            document.querySelector(".solution").innerHTML = sol;
-            return true;
-        case '-':
-            str = str.replace(/<img src="([^"]+)">/, "-");
-            sol = eval(str);
-            document.querySelector(".solution").innerHTML = sol;
-            return true;
-        case '/':
-            str = str.replace(/<img src="([^"]+)">/, "/");
-            sol = eval(str);
-            document.querySelector(".solution").innerHTML = sol;
-            return true;
-        case '*':
-            str = str.replace(/<img src="([^"]+)">/, "*");
-            sol = eval(str);
-            document.querySelector(".solution").innerHTML = sol;
-            return true;
-        case '%':
-            str = str.replace(/<img src="([^"]+)">/, "%");
-            sol = eval(str);
-            document.querySelector(".solution").innerHTML = sol;
-            return true;
-    }
+        // Replace all occurrences of the img tag with the corresponding operator symbol
+        HTML = HTML.replace(imgRegex, operatorSymbol);
+    });
+
+    sol = eval(HTML);
+    document.querySelector(".solution").innerHTML = sol;
+    return true;
 }
-
 
 document.querySelectorAll(".operation").forEach(button => {
     button.addEventListener("click", async e => {
@@ -74,16 +51,16 @@ document.querySelectorAll(".operation").forEach(button => {
             if (srcAttributeValue == "/img/equal.svg") {
                 cal = await calculation(document.querySelector(".numbers").innerHTML);
             } else {
-                if (document.querySelector(".numbers").innerHTML.includes(`.svg`)) {
-                    const currentHTML = document.querySelector(".numbers").innerHTML;
-                    const newHTML = currentHTML.replace(/<img src="([^"]+)">/, `<img src=${srcAttributeValue}>`);
-                    document.querySelector(".numbers").innerHTML = newHTML;
-                    storedHTML = newHTML;
-                } else {
-                    document.querySelector(".numbers").innerHTML = document.querySelector(".numbers").innerHTML + `<img src=${srcAttributeValue}>`;
-                    num = "";
-                    storedHTML = document.querySelector(".numbers").innerHTML;
-                }
+                // if (document.querySelector(".numbers").innerHTML.includes(`.svg`)) {
+                //     const currentHTML = document.querySelector(".numbers").innerHTML;
+                //     const newHTML = currentHTML.replace(/<img src="([^"]+)">/, `<img src=${srcAttributeValue}>`);
+                //     document.querySelector(".numbers").innerHTML = newHTML;
+                //     storedHTML = newHTML;
+                // } else {
+                document.querySelector(".numbers").innerHTML = document.querySelector(".numbers").innerHTML + `<img src=${srcAttributeValue}>`;
+                num = "";
+                storedHTML = document.querySelector(".numbers").innerHTML;
+                // }
             }
         }
         await logIsOperationUsed();
@@ -124,7 +101,11 @@ document.querySelector(".erase").addEventListener("click", async () => {
         let erasedChar = numbersHTML.charAt(numbersHTML.length - 1);
         console.log(erasedChar);
         if (erasedChar == ">") {
-            storedHTML = storedHTML.replace(/<img src="([^"]+)">/, "e");
+            let lastImgIndex = storedHTML.lastIndexOf('<img src="');
+            if (lastImgIndex !== -1) {
+                let lastImgTag = storedHTML.substring(lastImgIndex, storedHTML.indexOf(">", lastImgIndex) + 1);
+                storedHTML = storedHTML.replace(lastImgTag, "e");
+            }
             num = storedHTML;
             isOperationUsed = false;
             cal = false;
@@ -146,8 +127,8 @@ document.querySelector(".erase").addEventListener("click", async () => {
             cal = false;
             decimal = 1;
             await logIsOperationUsed();
-        } 
-        
+        }
+
         else {
             document.querySelector(".numbers").innerHTML = document.querySelector(".numbers").innerHTML.slice(0, -1);
             num = num.slice(0, -1);
@@ -155,10 +136,10 @@ document.querySelector(".erase").addEventListener("click", async () => {
     }
 });
 
-document.querySelector(".decimal").addEventListener("click", () => {
+document.querySelector(".decimal").addEventListener("click", async () => {
     if (!document.querySelector(".numbers").innerHTML.includes("img")) {
         if (decimal > 1) {
-            alert("You cannot use decimal more than one in a single number. At leat in my calculator :)");
+            alert("You cannot use decimal more than one in a single number. At least in my calculator :)");
         }
         else {
             num += document.querySelector(".decimal").innerHTML;
@@ -169,8 +150,8 @@ document.querySelector(".decimal").addEventListener("click", () => {
 
     // Use if .numbers.innerHtml.endsWith(>) then make the new number as 0.
     else if (document.querySelector(".numbers").innerHTML.endsWith(">")) {
-        if (decimal > 2) {
-            alert("You cannot use decimal more than one in a single number. At leat in my calculator :)");
+        if (num.includes(".")) {
+            alert("You cannot use decimal more than one in a single number. At least in my calculator :)");
         }
         else {
             num += "0.";
@@ -180,8 +161,8 @@ document.querySelector(".decimal").addEventListener("click", () => {
     }
 
     else if (document.querySelector(".numbers").innerHTML.includes("img") && !document.querySelector(".numbers").innerHTML.endsWith(">")) {
-        if (decimal > 2) {
-            alert("You cannot use decimal more than one in a single number. At leat in my calculator :)");
+        if (num.includes(".")) {
+            alert("You cannot use decimal more than one in a single number. At least in my calculator :)");
         }
         else {
             num += ".";
